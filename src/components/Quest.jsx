@@ -19,7 +19,7 @@ const Quest = (props) => {
           (obj) => obj.kode == userinput.kode
         );
 
-        userValue[objIndex].value = userinput.value;
+        return (userValue[objIndex].value = userinput.value);
       }
       // if (val.kode !== userinput.kode) {
       //   setUserValue((prev) => [...prev, userinput]);
@@ -29,7 +29,7 @@ const Quest = (props) => {
     });
 
     if (userValue.length == 0) {
-      setUserValue((prev) => [...prev, userinput]);
+      return setUserValue((prev) => [...prev, userinput]);
     }
 
     let dup = userValue.find((x) => {
