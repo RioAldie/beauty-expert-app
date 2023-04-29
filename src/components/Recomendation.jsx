@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import CircleProgress from './ResultCircle';
 
 // eslint-disable-next-line react/prop-types
@@ -45,18 +45,6 @@ const Recomendation = ({ data }) => {
             <br />
             <span style={{ fontWeight: 600 }}>Malam:</span> {malam}
           </Typography>{' '}
-          <Button
-            variant="contained"
-            color="success"
-            sx={{ marginTop: 3 }}>
-            Simpan
-          </Button>
-          <Button
-            variant="outlined"
-            color="success"
-            sx={{ marginTop: 3, marginLeft: 3 }}>
-            Ulang
-          </Button>
         </Box>
       </Box>
     </>

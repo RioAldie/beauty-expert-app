@@ -18,9 +18,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import Home from './Home';
 import DataGejala from './Gejala';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import ListMenu from '../components/Menu';
 import Result from './Result';
+import { MenuCtx } from '../context/menuCtx';
+import Histories from './Histories';
 
 const drawerWidth = 240;
 
@@ -79,7 +81,7 @@ const mdTheme = createTheme({
 // eslint-disable-next-line react/prop-types
 function DashboardContent() {
   const [open, setOpen] = useState(true);
-  const [active, setActive] = useState('Result');
+  const { activate } = useContext(MenuCtx);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -93,6 +95,9 @@ function DashboardContent() {
     }
     if (active === 'Result') {
       return <Result />;
+    }
+    if (active === 'Histori') {
+      return <Histories />;
     }
   };
 
@@ -122,7 +127,7 @@ function DashboardContent() {
               color="inherit"
               noWrap
               sx={{ flexGrow: 1 }}>
-              Dashboard
+              Beauty Expert System
             </Typography>
           </Toolbar>
         </AppBar>
@@ -139,7 +144,7 @@ function DashboardContent() {
             </IconButton>
           </Toolbar>
           <Divider />
-          <ListMenu active={active} setActive={setActive} />
+          <ListMenu />
         </Drawer>
         <Box
           component="main"
@@ -164,7 +169,7 @@ function DashboardContent() {
                     flexDirection: 'column',
                     height: 'max-content',
                   }}>
-                  {displayContent(active)}
+                  {displayContent(activate)}
                 </Paper>
               </Grid>
             </Grid>
