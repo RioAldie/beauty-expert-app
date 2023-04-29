@@ -5,11 +5,10 @@ import {
   RadioGroup,
   Typography,
 } from '@mui/material';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { UserCtx } from '../context/userCtx';
 
 const Quest = (props) => {
-  const [userInput, setUserInput] = useState({ kode: '', value: 0 });
   const { userValue, setUserValue } = useContext(UserCtx);
   const { name, kode } = props;
 
@@ -21,8 +20,6 @@ const Quest = (props) => {
         );
 
         userValue[objIndex].value = userinput.value;
-
-        return console.log('update', userValue);
       }
       // if (val.kode !== userinput.kode) {
       //   setUserValue((prev) => [...prev, userinput]);
@@ -33,10 +30,8 @@ const Quest = (props) => {
 
     if (userValue.length == 0) {
       setUserValue((prev) => [...prev, userinput]);
-
-      return console.log('first');
     }
-    let tesarray = [{ kode: 'G001' }, { kode: 'G002' }];
+
     let dup = userValue.find((x) => {
       return x.kode === userinput.kode;
     });

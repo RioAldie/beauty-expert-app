@@ -10,14 +10,14 @@ import { ResultCtx } from '../context/resultCtx';
 
 const Home = () => {
   const { userValue } = useContext(UserCtx);
-  const [setUserValueArr] = useState([]);
-  const { setResult } = useContext(ResultCtx);
+  const [userValueArr, setUserValueArr] = useState([]);
+  const { result, setResult } = useContext(ResultCtx);
   const [open, setOpen] = useState(false);
   const [finalNormal, setFinalNormal] = useState();
   const [finalSensitif, setFInalSensitif] = useState();
   const [finalDewasa, setFinalDewasa] = useState();
   const [finalJerawat, setFinalJerawat] = useState();
-  const [setIndex] = useState(2);
+  const [index, setIndex] = useState(2);
   const [isFinish, setIsFinish] = useState(false);
   let cfNormalArray = [];
   let cfSensitifArray = [];
@@ -88,7 +88,6 @@ const Home = () => {
   const countCFJerawat = (data) => {
     let CFold = data[0] + data[1] * (1 - data[0]);
 
-    console.log(data);
     combineCFJerawat(CFold, data);
   };
 
@@ -177,8 +176,8 @@ const Home = () => {
     <>
       <Loading open={open} />
       <ResultModal open={isFinish} setIsFinish={setIsFinish} />
-      <Typography variant="body1" fontWeight={600} marginBottom={5}>
-        Form Gejala
+      <Typography variant="h4" marginBottom={5}>
+        Bitipul
       </Typography>
       {questions.map((quest, i) => {
         // eslint-disable-next-line react/jsx-key
