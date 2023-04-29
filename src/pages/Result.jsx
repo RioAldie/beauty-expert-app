@@ -2,19 +2,17 @@ import { Box, Button } from '@mui/material';
 import CircleProgress from '../components/ResultCircle';
 import { useContext, useState } from 'react';
 import { ResultCtx } from '../context/resultCtx';
-import { useEffect } from 'react';
+import { addDoc, collection } from 'firebase/firestore';
 import Recomendation from '../components/Recomendation';
 import dataRecomend from '../data/rekomendation';
 import Loading from '../components/Loading';
+import { db } from '../firebase';
+import InputSaveModal from '../components/InputSaveModal';
 
 const Result = () => {
   const { result } = useContext(ResultCtx);
   const [open, setOpen] = useState(false);
-  const [bestResult, setBestResult] = useState({
-    conclusion: 0,
-    id: '',
-    name: '',
-  });
+  const [isSave, setIsSave] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [recomend, setRecomend] = useState();
 
@@ -28,13 +26,27 @@ const Result = () => {
   //     });
   //   }, []);
 
+  const reportsCollectionRef = collection(db, 'results');
+
+  const handleSubmitReport = async (dataReport) => {
+    try {
+      setIsLoading(true);
+      await addDoc(reportsCollectionRef, dataReport).then((res) => {
+        console.log(res);
+        setIsLoading(false);
+      });
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+    }
+  };
+
   const handleRekomendasi = () => {
     setIsLoading(true);
     let newRes = { conclusion: 0, id: '', name: '' };
     result.map((res, i) => {
       if (res.conclusion > newRes.conclusion) {
         newRes = res;
-        console.log(res.conclusion, '>= ', newRes.conclusion);
       }
     });
     setTimeout(() => {
@@ -58,7 +70,7 @@ const Result = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        gap: 10,
+        gap: 5,
       }}>
       <Box
         sx={{
@@ -84,6 +96,23 @@ const Result = () => {
 
       {open && <Recomendation data={recomend} />}
       <Loading open={isLoading} />
+      {open && (
+        <Box>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => setIsSave(true)}>
+            Simpan
+          </Button>
+          <Button
+            variant="outlined"
+            color="success"
+            sx={{ marginLeft: 3 }}>
+            Ulang
+          </Button>
+        </Box>
+      )}
+      {isSave && <InputSaveModal data={recomend} />}
     </Box>
   );
 };

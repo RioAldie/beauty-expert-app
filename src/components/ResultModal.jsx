@@ -1,9 +1,10 @@
 import { Box, Button, Modal, Typography } from '@mui/material';
-import React from 'react';
+import { useContext } from 'react';
+import { MenuCtx } from '../context/menuCtx';
 
 const ResultModal = (props) => {
-  const { open } = props;
-
+  const { open, setIsFinish } = props;
+  const { setActivate } = useContext(MenuCtx);
   const style = {
     position: 'absolute',
     width: '100%',
@@ -11,6 +12,11 @@ const ResultModal = (props) => {
     justifyContent: 'center',
     alignItems: 'center',
     height: '100vh',
+  };
+
+  const handleAction = () => {
+    setIsFinish(false);
+    setActivate('Result');
   };
   return (
     <Modal
@@ -33,7 +39,9 @@ const ResultModal = (props) => {
           }}>
           <Typography variant="h6">Penghitungan Selesai</Typography>
 
-          <Button variant="contained">Lihat Hasil</Button>
+          <Button variant="contained" onClick={() => handleAction()}>
+            Lihat Hasil
+          </Button>
         </Box>
       </Box>
     </Modal>

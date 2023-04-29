@@ -10,14 +10,15 @@ import { ResultCtx } from '../context/resultCtx';
 
 const Home = () => {
   const { userValue } = useContext(UserCtx);
-  const [userValueArr, setUserValueArr] = useState([]);
-  const { result, setResult } = useContext(ResultCtx);
+  const [setUserValueArr] = useState([]);
+  const { setResult } = useContext(ResultCtx);
   const [open, setOpen] = useState(false);
   const [finalNormal, setFinalNormal] = useState();
   const [finalSensitif, setFInalSensitif] = useState();
   const [finalDewasa, setFinalDewasa] = useState();
   const [finalJerawat, setFinalJerawat] = useState();
-  const [index, setIndex] = useState(2);
+  const [setIndex] = useState(2);
+  const [isFinish, setIsFinish] = useState(false);
   let cfNormalArray = [];
   let cfSensitifArray = [];
   let cfBekasJerawatArray = [];
@@ -54,6 +55,7 @@ const Home = () => {
 
     setTimeout(() => {
       setOpen(false);
+      setIsFinish(true);
     }, [5000]);
   };
 
@@ -147,11 +149,6 @@ const Home = () => {
     }
   };
   useEffect(() => {
-    console.log('Normal: ', finalNormal);
-    console.log('Sensitif: ', finalSensitif);
-    console.log('Jerawat: ', finalJerawat);
-    console.log('Dewasa', finalDewasa);
-
     setResult([
       {
         conclusion: finalNormal,
@@ -174,20 +171,14 @@ const Home = () => {
         name: 'Kulit Dewasa',
       },
     ]);
-    // setResult({
-    //   normal: finalNormal,
-    //   dewasa: finalDewasa,
-    //   sensitif: finalSensitif,
-    //   jerawat: finalJerawat,
-    // });
   }, [finalNormal, finalJerawat, finalDewasa, finalSensitif]);
 
   return (
     <>
       <Loading open={open} />
-      <ResultModal open={false} />
-      <Typography variant="h4" marginBottom={5}>
-        Bitipul
+      <ResultModal open={isFinish} setIsFinish={setIsFinish} />
+      <Typography variant="body1" fontWeight={600} marginBottom={5}>
+        Form Gejala
       </Typography>
       {questions.map((quest, i) => {
         // eslint-disable-next-line react/jsx-key

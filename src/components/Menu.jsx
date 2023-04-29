@@ -1,47 +1,44 @@
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import PeopleIcon from '@mui/icons-material/People';
 
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import { Divider, List } from '@mui/material';
 
-const ListMenu = (props) => {
-  const { active, setActive } = props;
+import { useContext } from 'react';
+import { MenuCtx } from '../context/menuCtx';
+import { List } from '@mui/material';
+
+const ListMenu = () => {
+  const { setActivate } = useContext(MenuCtx);
   return (
     <List component="nav">
-      <ListItemButton onClick={() => setActive('Home')}>
+      <ListItemButton onClick={() => setActivate('Home')}>
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
         <ListItemText primary="Reports" />
       </ListItemButton>
-      <ListItemButton onClick={() => setActive('Gejala')}>
+      <ListItemButton onClick={() => setActivate('Gejala')}>
         <ListItemIcon>
           <PeopleIcon />
         </ListItemIcon>
         <ListItemText primary="Users" />
       </ListItemButton>
-      <ListItemButton onClick={() => setActive('Result')}>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Result" />
-      </ListItemButton>
-
-      <Divider sx={{ my: 1 }} />
-
-      <ListSubheader component="div" inset>
-        Saved reports
-      </ListSubheader>
-      <ListItemButton>
+      <ListItemButton onClick={() => setActivate('Result')}>
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
-        <ListItemText primary="Statistik" />
+        <ListItemText primary="Result" />
+      </ListItemButton>
+      <ListItemButton onClick={() => setActivate('Histori')}>
+        <ListItemIcon>
+          <LibraryBooksIcon />
+        </ListItemIcon>
+        <ListItemText primary="Histori" />
       </ListItemButton>
     </List>
   );
